@@ -1,4 +1,4 @@
-import './App.css'
+import "./App.css";
 import { useEffect, useState } from "react";
 import getReviews, { getReview } from "./services";
 import Review from "./review";
@@ -21,15 +21,20 @@ function App() {
   // })
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Box sx={{display: 'grid', gap: 2,  gridTemplateColumns: 'repeat(5, 1fr)' , gridTemplateRows: 'auto'}}>
-          {reviews.map((i) => (
-            <Review key={i.id} {...i} />
-          ))}
-        </Box>
-      </header>
-    </div>
+    <Box sx={{ backgroundColor: "#282c34", paddingX: '20px'}}>
+      <Box
+        sx={{
+          display: "grid",
+          gap: 2,
+          gridTemplateColumns: "repeat(5, 1fr)",
+          gridTemplateRows: "auto",
+        }}
+      >
+        {reviews.map((i) => (
+          <Review key={i.id} {...i} />
+        ))}
+      </Box>
+    </Box>
   );
 }
 

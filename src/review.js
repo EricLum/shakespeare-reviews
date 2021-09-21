@@ -4,28 +4,44 @@ import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import StarIcon from "@mui/icons-material/Star";
+import { Box } from "@mui/system";
 
 const Review = ({ author, body, id, publish_date, rating }) => {
   const formattedDate = new Date(publish_date).toDateString();
+  // Create array to map over how many stars there are
   const adjustedStars = Array.apply(null, Array(Math.ceil(rating))).map(
     function (x, i) {
       return i;
     }
   );
   return (
-    <Card sx={{ maxWidth: "300px", minWidth: "150px", maxHeight: "300px",padding: "20px" }}>
-      <CardHeader title={author} />
+    <Card
+      sx={{
+        maxWidth: "300px",
+        minWidth: "150px",
+        padding: "20px",
+      }}
+    >
+      <CardHeader
+        sx={{ textAlign: "center" }}
+        title={<Typography variant="h5">{author}</Typography>}
+      />
       <CardContent>
-        <Typography>{body}</Typography>
-        <Typography>{formattedDate}</Typography>
-        {adjustedStars.map((i) => (
-          <span>
-            <span>
-              <StarIcon />
-            </span>
-          </span>
-        ))}
-        <Typography>{rating}</Typography>
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+          <Typography paragraph>{body}</Typography>
+        </Box>
+      </CardContent>
+      <CardContent>
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+          {adjustedStars.map((i) => (
+            <StarIcon />
+          ))}
+          <Typography>{rating}</Typography>
+        </Box>
+
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+          <Typography>{formattedDate}</Typography>
+        </Box>
       </CardContent>
     </Card>
   );
