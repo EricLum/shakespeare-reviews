@@ -1,17 +1,42 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import getReviews, { getReview } from "./services";
-import Review from "./review";
+import getReviews from "./services";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  withRouter,
+} from "react-router-dom";
+import CardApp from "./CardApp";
+import Button from "@mui/material/Button";
+import { CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import ListApp from "./ListApp";
 
-function App() {
+const App = ({history}) => {
   const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  // Get Reviews
   useEffect(() => {
-    getReviews().then((i) => {
-      setReviews(i);
-    });
-  });
+    setLoading(true);
+    getReviews()
+      .then((i) => {
+        setReviews(i);
+      })
+      .then(() => {
+        setTimeout(() => {
+          setLoading(false);
+        }, 1);
+      });
+  }, []);
 
+  const handleClick = () => {
+    history.push("/list");
+  };
+
+  const handleViewCardApp = () => {
+    history.push("/");
+  };
   // // Get individual
   // useEffect(()=>{
   //   // Ids are specific
@@ -21,21 +46,47 @@ function App() {
   // })
 
   return (
-    <Box sx={{ backgroundColor: "#282c34", paddingX: '20px'}}>
+    <>
+    {loading && (
       <Box
         sx={{
-          display: "grid",
-          gap: 2,
-          gridTemplateColumns: "repeat(5, 1fr)",
-          gridTemplateRows: "auto",
+          backgroundColor: "black",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
         }}
       >
-        {reviews.map((i) => (
-          <Review key={i.id} {...i} />
-        ))}
+        <CircularProgress size={400} />
+      </Box>)}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          height: "50px",
+          backgroundColor: "black",
+          color: "white",
+        }}
+      >
+        <Typography>Select a view</Typography>
+        <Button>
+          <Typography onClick={handleViewCardApp}>Card</Typography>
+        </Button>
+        <Button>
+          <Typography onClick={handleClick}>List</Typography>
+        </Button>
       </Box>
-    </Box>
+      <Switch>
+        <Route exact path="/">
+          <CardApp reviews={reviews} />
+        </Route>
+        <Route path="/list">
+          <ListApp reviews={reviews} />
+        </Route>
+      </Switch>
+    </>
   );
 }
 
-export default App;
+export default withRouter(App);

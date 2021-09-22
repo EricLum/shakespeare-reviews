@@ -5,12 +5,13 @@ import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import StarIcon from "@mui/icons-material/Star";
 import { Box } from "@mui/system";
+import { v4 as uuidv4 } from "uuid";
 
 const Review = ({ author, body, id, publish_date, rating }) => {
   const formattedDate = new Date(publish_date).toDateString();
   // Create array to map over how many stars there are
   const adjustedStars = Array.apply(null, Array(Math.ceil(rating))).map(
-    function (x, i) {
+    function (_, i) {
       return i;
     }
   );
@@ -20,6 +21,8 @@ const Review = ({ author, body, id, publish_date, rating }) => {
         maxWidth: "300px",
         minWidth: "150px",
         padding: "20px",
+        backgroundColor: '#3f51b5',
+        color: 'white'
       }}
     >
       <CardHeader
@@ -33,8 +36,8 @@ const Review = ({ author, body, id, publish_date, rating }) => {
       </CardContent>
       <CardContent>
         <Box sx={{ display: "flex", flexDirection: "row" }}>
-          {adjustedStars.map((i) => (
-            <StarIcon />
+          {adjustedStars.map(() => (
+            <StarIcon key={uuidv4()} />
           ))}
           <Typography>{rating}</Typography>
         </Box>
