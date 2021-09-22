@@ -1,12 +1,19 @@
 import React from "react";
 import Review from "./ReviewCard";
 import { Box } from "@mui/system";
+import { Typography } from "@mui/material";
 
 const CardApp = ({ reviews }) => {
   return (
     <Box
       sx={{ backgroundColor: "#282c34", paddingX: "5%", maxWidth: "2400px" }}
     >
+      <Box sx={{paddingY: "20px"}}>
+        <Typography sx={{ color: "white" }} variant="h4">
+          Reviews by Card
+        </Typography>
+      </Box>
+
       <Box
         sx={{
           display: "grid",

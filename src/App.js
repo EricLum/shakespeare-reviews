@@ -2,7 +2,6 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import getReviews from "./services";
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   withRouter,
@@ -17,6 +16,7 @@ import shapeData from './utils'
 const App = ({ history }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+
   // Get Reviews
   useEffect(() => {
     setLoading(true);
@@ -67,7 +67,7 @@ const App = ({ history }) => {
           <Typography onClick={handleViewCardApp}>Card</Typography>
         </Button>
         <Button>
-          <Typography onClick={handleClick}>List</Typography>
+          <Typography onClick={handleClick}>Table</Typography>
         </Button>
       </Box>
 
