@@ -21,7 +21,7 @@ const App = ({ history }) => {
       .then((i) => {
         setReviews(shapeData(i));
       })
-      .catch((e) => {
+      .catch(() => {
         setMessages("Something went wrong");
       })
       .finally(() => {

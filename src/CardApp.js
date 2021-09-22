@@ -22,8 +22,8 @@ const CardApp = ({ reviews }) => {
           gridTemplateRows: "auto",
         }}
       >
-        {reviews.map((i) => (
-          <Review key={i.id} {...i} />
+        {reviews.map((review) => (
+          <Review key={review.id} {...review} />
         ))}
       </Box>
     </Box>

@@ -9,11 +9,12 @@ import {
   TableRow,
   Box,
   Typography,
+  Rating,
 } from "@mui/material";
 const ListApp = ({ reviews }) => {
   return (
     <>
-      <Box sx={{ paddingY: "20px", textAlign: 'center' }}>
+      <Box sx={{ paddingY: "20px", textAlign: "center" }}>
         <Typography variant="h4">Reviews Table</Typography>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -24,7 +25,7 @@ const ListApp = ({ reviews }) => {
                 <TableCell align="left">Author</TableCell>
                 <TableCell align="left">Rating</TableCell>
                 <TableCell align="left">Published</TableCell>
-                <TableCell align="left">Body</TableCell>
+                <TableCell align="left">Review</TableCell>
               </TableRow>
             </TableHead>
 
@@ -33,9 +34,13 @@ const ListApp = ({ reviews }) => {
                 return (
                   <TableRow key={id}>
                     <TableCell>{author}</TableCell>
-                    <TableCell>{rating}</TableCell>
+                    <TableCell>
+                      <Rating value={rating} readOnly />
+                    </TableCell>
                     <TableCell>{published}</TableCell>
-                    <TableCell>{body}</TableCell>
+                    <TableCell>
+                      <i>{body}</i>
+                    </TableCell>
                   </TableRow>
                 );
               })}
