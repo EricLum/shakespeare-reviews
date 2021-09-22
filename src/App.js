@@ -1,21 +1,18 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import getReviews from "./services";
-import {
-  Switch,
-  Route,
-  withRouter,
-} from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 import CardApp from "./CardApp";
 import Button from "@mui/material/Button";
-import { CircularProgress, Typography } from "@mui/material";
+import { CircularProgress, Typography, Alert, AlertTitle } from "@mui/material";
 import { Box } from "@mui/system";
 import TableApp from "./TableApp";
-import shapeData from './utils'
+import shapeData from "./utils";
 
 const App = ({ history }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [messages, setMessages] = useState("");
 
   // Get Reviews
   useEffect(() => {
@@ -24,7 +21,10 @@ const App = ({ history }) => {
       .then((i) => {
         setReviews(shapeData(i));
       })
-      .then(() => {
+      .catch((e) => {
+        setMessages("Something went wrong");
+      })
+      .finally(() => {
         setLoading(false);
       });
   }, []);
@@ -52,6 +52,12 @@ const App = ({ history }) => {
           <CircularProgress size={400} />
         </Box>
       )}
+      {messages && (
+        <Alert severity="error">
+          <AlertTitle>Error!</AlertTitle>
+          Something went wrong
+        </Alert>
+      )}
       <Box
         sx={{
           display: "flex",
@@ -77,6 +83,9 @@ const App = ({ history }) => {
         </Route>
         <Route path="/table">
           <TableApp reviews={reviews} />
+        </Route>
+        <Route default>
+          <CardApp reviews={reviews} />
         </Route>
       </Switch>
     </>
