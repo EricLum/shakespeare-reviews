@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   TableContainer,
   Paper,
@@ -7,13 +7,12 @@ import {
   TableHead,
   Table,
   TableRow,
-  Button,
   Box,
 } from "@mui/material";
 const ListApp = ({ reviews }) => {
   return (
     <Box sx={{display:'flex', justifyContent: 'center'}}>
-      <TableContainer component={Paper} sx={{ width: "50%" }}>
+      <TableContainer component={Paper} sx={{ width: "80%" }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -25,14 +24,14 @@ const ListApp = ({ reviews }) => {
           </TableHead>
 
           <TableBody>
-            {reviews.map((review) => {
+            {reviews.map(({id,author,rating,published,body}) => {
               return (
-                <TableRow>
-                  <TableCell>{review.author}</TableCell>
-                  <TableCell>{review.rating}</TableCell>
-                  <TableCell>{review.publish_date}</TableCell>
+                <TableRow key={id}>
+                  <TableCell>{author}</TableCell>
+                  <TableCell>{rating}</TableCell>
+                  <TableCell>{published}</TableCell>
                   <TableCell>
-                    <Button>View Body</Button>
+                    {body}
                   </TableCell>
                 </TableRow>
               );

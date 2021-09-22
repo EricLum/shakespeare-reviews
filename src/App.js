@@ -11,9 +11,10 @@ import CardApp from "./CardApp";
 import Button from "@mui/material/Button";
 import { CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import ListApp from "./ListApp";
+import TableApp from "./TableApp";
+import shapeData from './utils'
 
-const App = ({history}) => {
+const App = ({ history }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   // Get Reviews
@@ -21,44 +22,36 @@ const App = ({history}) => {
     setLoading(true);
     getReviews()
       .then((i) => {
-        setReviews(i);
+        setReviews(shapeData(i));
       })
       .then(() => {
-        setTimeout(() => {
-          setLoading(false);
-        }, 1);
+        setLoading(false);
       });
   }, []);
 
   const handleClick = () => {
-    history.push("/list");
+    history.push("/table");
   };
 
   const handleViewCardApp = () => {
     history.push("/");
   };
-  // // Get individual
-  // useEffect(()=>{
-  //   // Ids are specific
-  //   getReview(9783221620868).then(i=>{
-  //     console.log(i)
-  //   })
-  // })
 
   return (
     <>
-    {loading && (
-      <Box
-        sx={{
-          backgroundColor: "black",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh",
-        }}
-      >
-        <CircularProgress size={400} />
-      </Box>)}
+      {loading && (
+        <Box
+          sx={{
+            backgroundColor: "black",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+          }}
+        >
+          <CircularProgress size={400} />
+        </Box>
+      )}
       <Box
         sx={{
           display: "flex",
@@ -77,16 +70,17 @@ const App = ({history}) => {
           <Typography onClick={handleClick}>List</Typography>
         </Button>
       </Box>
+
       <Switch>
         <Route exact path="/">
           <CardApp reviews={reviews} />
         </Route>
-        <Route path="/list">
-          <ListApp reviews={reviews} />
+        <Route path="/table">
+          <TableApp reviews={reviews} />
         </Route>
       </Switch>
     </>
   );
-}
+};
 
 export default withRouter(App);
