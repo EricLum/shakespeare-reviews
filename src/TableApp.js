@@ -35,7 +35,7 @@ const ListApp = ({ reviews }) => {
                   <TableRow key={id}>
                     <TableCell>{author}</TableCell>
                     <TableCell>
-                      <Rating value={rating} readOnly />
+                      <Rating value={rating} readOnly precision={0.1} />
                     </TableCell>
                     <TableCell>{published}</TableCell>
                     <TableCell>

@@ -5,6 +5,7 @@ import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import { Box } from "@mui/system";
+import { CardActions } from "@mui/material";
 
 const Review = ({ author, body, id, published, rating }) => {
   return (
@@ -22,7 +23,11 @@ const Review = ({ author, body, id, published, rating }) => {
         title={<Typography variant="h5">{author}</Typography>}
       />
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Rating value={rating} readOnly />
+        <Rating value={rating} readOnly precision={0.1} />
+      </Box>
+
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        {"(" + rating + ")"}
       </Box>
 
       <CardContent>
@@ -32,11 +37,11 @@ const Review = ({ author, body, id, published, rating }) => {
           </Typography>
         </Box>
       </CardContent>
-      <CardContent>
+      <CardActions>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Typography>{published}</Typography>
         </Box>
-      </CardContent>
+      </CardActions>
     </Card>
   );
 };

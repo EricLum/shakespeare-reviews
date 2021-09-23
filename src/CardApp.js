@@ -8,7 +8,7 @@ const CardApp = ({ reviews }) => {
     <Box
       sx={{ backgroundColor: "#282c34", paddingX: "5%", maxWidth: "2400px" }}
     >
-      <Box sx={{paddingY: "20px"}}>
+      <Box sx={{ paddingY: "20px" }}>
         <Typography sx={{ color: "white" }} variant="h4">
           Reviews by Card
         </Typography>
@@ -20,6 +20,7 @@ const CardApp = ({ reviews }) => {
           gap: 2,
           gridTemplateColumns: "repeat(5, 1fr)",
           gridTemplateRows: "auto",
+          alignItems:'center'
         }}
       >
         {reviews.map((review) => (
