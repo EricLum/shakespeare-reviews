@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Review from "./ReviewCard";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
@@ -20,7 +21,7 @@ const CardApp = ({ reviews }) => {
           gap: 2,
           gridTemplateColumns: "repeat(5, 1fr)",
           gridTemplateRows: "auto",
-          alignItems:'center'
+          alignItems: "center",
         }}
       >
         {reviews.map((review) => (
@@ -29,6 +30,18 @@ const CardApp = ({ reviews }) => {
       </Box>
     </Box>
   );
+};
+
+CardApp.propTypes = {
+  reviews: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      author: PropTypes.string,
+      rating: PropTypes.number,
+      published: PropTypes.string,
+      body: PropTypes.string,
+    })
+  ),
 };
 
 export default CardApp;

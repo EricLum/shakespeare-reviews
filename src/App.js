@@ -1,5 +1,5 @@
-import "./App.css";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import getReviews from "./services";
 import { Switch, Route, withRouter } from "react-router-dom";
 import CardApp from "./CardApp";
@@ -9,7 +9,7 @@ import { Box } from "@mui/system";
 import TableApp from "./TableApp";
 import shapeData from "./utils";
 
-const App = ({ history }) => {
+const App = ({ history, getData }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState("");
@@ -17,9 +17,9 @@ const App = ({ history }) => {
   // Get Reviews
   useEffect(() => {
     setLoading(true);
-    getReviews()
-      .then((i) => {
-        setReviews(shapeData(i));
+    getData()
+      .then((data) => {
+        setReviews(shapeData(data));
       })
       .catch(() => {
         setMessages("Something went wrong");
@@ -27,7 +27,7 @@ const App = ({ history }) => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [getData]);
 
   const handleClick = () => {
     history.push("/table");
@@ -39,25 +39,6 @@ const App = ({ history }) => {
 
   return (
     <>
-      {loading && (
-        <Box
-          sx={{
-            backgroundColor: "black",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "100vh",
-          }}
-        >
-          <CircularProgress size={400} />
-        </Box>
-      )}
-      {messages && (
-        <Alert severity="error">
-          <AlertTitle>Error!</AlertTitle>
-          Something went wrong
-        </Alert>
-      )}
       <Box
         sx={{
           display: "flex",
@@ -77,19 +58,46 @@ const App = ({ history }) => {
         </Button>
       </Box>
 
+      {loading && (
+        <Box
+          sx={{
+            backgroundColor: "black",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+          }}
+        >
+          <CircularProgress size={400} />
+        </Box>
+      )}
+      {messages && (
+        <Alert severity="error">
+          <AlertTitle>Error!</AlertTitle>
+          {messages}
+        </Alert>
+      )}
+
       <Switch>
         <Route exact path="/">
-          <CardApp reviews={reviews} />
+          {!loading && <CardApp reviews={reviews} />}
         </Route>
         <Route path="/table">
-          <TableApp reviews={reviews} />
+          {!loading && <TableApp reviews={reviews} />}
         </Route>
-        <Route default>
-          <CardApp reviews={reviews} />
-        </Route>
+        <Route default>{!loading && <CardApp reviews={reviews} />}</Route>
       </Switch>
     </>
   );
+};
+
+App.defaultProps = {
+  getData: getReviews,
+};
+
+App.propTypes = {
+  getData: PropTypes.func,
+  history: PropTypes.object,
 };
 
 export default withRouter(App);
